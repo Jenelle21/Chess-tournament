@@ -11,3 +11,7 @@ def about(request):
 
 def chess(request):
     return render(request, 'main_pages/chess.html')
+
+
+def chess_new(request):
+    return render(request, 'main_pages/chess2.html')

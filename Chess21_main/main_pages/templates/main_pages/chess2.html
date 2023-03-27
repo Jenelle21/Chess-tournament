@@ -1,0 +1,60 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Tournament</title>
+    <link rel="stylesheet" href="{% static 'main_pages/css/chess_modern.css' %}">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Chess Tournament</h1>
+        <p>A battle of wits and strategy</p>
+      </div>
+    </header>
+    <nav>
+      <div class="container">
+        <ul>
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#results">Results</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+    <main>
+      <section id="about">
+        <div class="container">
+          <h2>About</h2>
+          <p>Welcome to the annual Chess Tournament. This is a place where chess players of all levels come together to compete and share their love for the game. Join us for a fun-filled weekend of intense competition and camaraderie.</p>
+        </div>
+      </section>
+      <section id="schedule">
+        <div class="container">
+          <h2>Schedule</h2>
+          <p>Check back soon for the tournament schedule.</p>
+        </div>
+      </section>
+      <section id="results">
+        <div class="container">
+          <h2>Results</h2>
+          <p>Check back after the tournament for the latest results.</p>
+        </div>
+      </section>
+      <section id="contact">
+        <div class="container">
+          <h2>Contact Us</h2>
+          <p>For any inquiries, please email us at <a href="mailto:info@chesstournament.com">info@chesstournament.com</a>.</p>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="container">
+        <p>&copy; 2023 Chess Tournament. All Rights Reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
