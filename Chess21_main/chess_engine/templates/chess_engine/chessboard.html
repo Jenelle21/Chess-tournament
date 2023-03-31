@@ -1,0 +1,50 @@
+{% extends 'chess_engine/base.html' %}
+{% load static %}
+
+{% block title %}Chessboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Chessboard</h1>
+    <div id="chessboard" style="width: 600px"></div>
+</div>
+
+<script
+  src="https://code.jquery.com/jquery-3.6.4.js"
+  integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+  crossorigin="anonymous"></script>
+<script src="{% static 'chess_engine/js/chessboard.js' %}"></script>
+<script>
+    let board = ChessBoard('chessboard', {
+        position: '{{ board }}',
+        draggable: true,
+        onDrop: function(source, target, piece, newPos, oldPos, orientation) {
+            const moveData = {
+                'source': source,
+                'target': target,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            };
+            fetch('{% url "make_move" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify(moveData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                board.position(data.position, true);
+                if (data.result) {
+                    alert(data.result);
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
