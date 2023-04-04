@@ -12,6 +12,14 @@
 - bootstrap?
 - black theme (optional)
 
+## [0.1.3] - 2023-04-04
+### Added
+- PostgreSQL database
+- tables for games and moves
+### Removed
+- SQLite database
+
+*****
 ## [0.1.2] - 2023-03-31
 ### Added
 - moves validation

@@ -4,47 +4,72 @@
 {% block title %}Chessboard{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Chessboard</h1>
-    <div id="chessboard" style="width: 600px"></div>
-</div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li class="login"><a href="#">Login</a></li>
+                <li class="signup"><a href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<script
-  src="https://code.jquery.com/jquery-3.6.4.js"
-  integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
-  crossorigin="anonymous"></script>
-<script src="{% static 'chess_engine/js/chessboard.js' %}"></script>
-<script>
-    let board = ChessBoard('chessboard', {
-        position: '{{ board }}',
-        draggable: true,
-        onDrop: function(source, target, piece, newPos, oldPos, orientation) {
-            const moveData = {
-                'source': source,
-                'target': target,
-                'csrfmiddlewaretoken': '{{ csrf_token }}'
-            };
-            fetch('{% url "make_move" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify(moveData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                board.position(data.position, true);
-                if (data.result) {
-                    alert(data.result);
-                }
-            });
-        }
-    });
-</script>
+    <main>
+        <div class="game-wrapper">
+            <div id="chessboard" class="chessboard"></div>
+            <div class="game-info">
+                <h2>Game Analysis</h2>
+                <div id="analysis"></div>
+            </div>
+            <div class="game-log">
+                <h2>Move Log</h2>
+                <ul id="move-log"></ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 Chessboard</p>
+    </footer>
+
+    <script
+            src="https://code.jquery.com/jquery-3.6.4.js"
+            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+            crossorigin="anonymous"></script>
+    <script src="{% static 'chess_engine/js/chessboard.js' %}"></script>
+    <script>
+        let board = ChessBoard('chessboard', {
+            {#orientation: 'black',#}
+            position: '{{ board }}',
+            draggable: true,
+            onDrop: function (source, target, piece, newPos, oldPos, orientation) {
+                const moveData = {
+                    'source': source,
+                    'target': target,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                };
+                fetch('{% url "make_move" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify(moveData)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        board.position(data.position, true);
+                        if (data.result) {
+                            alert(data.result);
+                        }
+                    });
+            }
+        });
+    </script>
 {% endblock %}
