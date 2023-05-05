@@ -2,7 +2,6 @@
 ### Unreleased:
 ##### Main goals:
 - sign up/login form
-- chess board
 - rating/stats
 - database
 - matchmaking system
@@ -11,6 +10,7 @@
 - styles for all pages
 - bootstrap?
 - black theme (optional)
+- chess board styles
 
 ## [0.1.3] - 2023-04-04
 ### Added
